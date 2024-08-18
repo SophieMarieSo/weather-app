@@ -10,6 +10,7 @@ function App() {
 
   const [weather, setWeather] = useState(null);
   const [city, setCity] = useState('');
+  const [selected, setSelected] = useState('current');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -31,17 +32,29 @@ function App() {
 
   const getWeatherByCurrentLocation = async (lat, lon) => {
     setLoading(true);
-    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=953f0c6e931e61136763636928559bf1&units=metric`;
-    const res = await axios.get(url);
-    setWeather(res.data);
+
+    try {
+      const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=953f0c6e931e61136763636928559bf1&units=metric`;
+      const res = await axios.get(url);
+      setWeather(res.data);
+    } catch (error) {
+      alert(error);
+    }
+
     setLoading(false);
   };
 
   const getWeatherByCity = async () => {
     setLoading(true);
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=953f0c6e931e61136763636928559bf1&units=metric`;
-    const res = await axios.get(url);
-    setWeather(res.data);
+
+    try {
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=953f0c6e931e61136763636928559bf1&units=metric`;
+      const res = await axios.get(url);
+      setWeather(res.data);
+    } catch (error) {
+      alert(error);
+    }
+
     setLoading(false);
   };
 
@@ -58,7 +71,13 @@ function App() {
         ) : (
           <>
             <WeatherBox weather={weather} />
-            <WeatherButton cities={cities} setCity={setCity} />
+            <WeatherButton
+              cities={cities}
+              city={city}
+              selected={selected}
+              setCity={setCity}
+              setSelected={setSelected}
+            />
           </>
         )}
       </div>
