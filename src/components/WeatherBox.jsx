@@ -1,11 +1,11 @@
 import React from 'react';
 
-export default function WeatherBox() {
+export default function WeatherBox({ weather }) {
   return (
     <div className='weather-box'>
-      <div>su-won</div>
-      <h2>30</h2>
-      <h3>맑은 하늘</h3>
+      <h5>{weather?.name}</h5>
+      <h1>{weather?.main.temp} °C</h1>
+      <h5>{weather?.weather[0].description}</h5>
     </div>
   );
 }

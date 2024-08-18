@@ -1,10 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import axios from 'axios';
 import WeatherBox from './components/WeatherBox';
 import WeatherButton from './components/WeatherButton';
 
 function App() {
+  const [weather, setWeather] = useState(null);
+
   useEffect(() => {
     getCurrentLocation();
   }, []);
@@ -19,14 +21,15 @@ function App() {
   };
 
   const getWeatherByCurrentLocation = async (lat, lon) => {
-    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=953f0c6e931e61136763636928559bf1`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=953f0c6e931e61136763636928559bf1&units=metric`;
     const res = await axios.get(url);
+    setWeather(res.data);
   };
 
   return (
     <div>
       <div className='container'>
-        <WeatherBox />
+        <WeatherBox weather={weather} />
         <WeatherButton />
       </div>
     </div>
