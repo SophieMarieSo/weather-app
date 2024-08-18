@@ -5,6 +5,8 @@ import WeatherBox from './components/WeatherBox';
 import WeatherButton from './components/WeatherButton';
 
 function App() {
+  const cities = ['new york', 'paris', 'tokyo'];
+
   const [weather, setWeather] = useState(null);
 
   useEffect(() => {
@@ -30,7 +32,7 @@ function App() {
     <div>
       <div className='container'>
         <WeatherBox weather={weather} />
-        <WeatherButton />
+        <WeatherButton cities={cities} />
       </div>
     </div>
   );
