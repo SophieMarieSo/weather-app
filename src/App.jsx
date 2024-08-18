@@ -13,7 +13,7 @@ function App() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (city === '') {
+    if (city === '' || city === 'current') {
       getCurrentLocation();
     } else {
       getWeatherByCity();
