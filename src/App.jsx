@@ -8,10 +8,15 @@ function App() {
   const cities = ['new york', 'paris', 'tokyo'];
 
   const [weather, setWeather] = useState(null);
+  const [city, setCity] = useState('');
 
   useEffect(() => {
-    getCurrentLocation();
-  }, []);
+    if (city === '') {
+      getCurrentLocation();
+    } else {
+      getWeatherByCity();
+    }
+  }, [city]);
 
   const getCurrentLocation = () => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -28,11 +33,17 @@ function App() {
     setWeather(res.data);
   };
 
+  const getWeatherByCity = async () => {
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=953f0c6e931e61136763636928559bf1&units=metric`;
+    const res = await axios.get(url);
+    setWeather(res.data);
+  };
+
   return (
     <div>
       <div className='container'>
         <WeatherBox weather={weather} />
-        <WeatherButton cities={cities} />
+        <WeatherButton cities={cities} setCity={setCity} />
       </div>
     </div>
   );
